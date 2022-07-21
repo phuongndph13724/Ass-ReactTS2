@@ -1,9 +1,22 @@
-import { Button, Form, Input, InputNumber, Upload, Select ,message} from "antd";
+import {
+  Typography,
+  Col,
+  Row,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  message,
+} from "antd";
 import React from "react";
 import styled from "styled-components";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { createPhone } from "../../../api/phone";
+import UploadImage from "../../../components/Phone/UploadImage";
+import TextArea from "antd/lib/input/TextArea";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -34,97 +47,136 @@ const { Option } = Select;
 const PhoneAdd: React.FC = () => {
   const navigate = useNavigate();
   const onFinish = async (values: any) => {
-    console.log('Success : ' , values);
+    console.log("Success : ", values);
     try {
       const data = await createPhone(values);
       message.success("Tạo mới thành công");
+      navigate('/admin/phone');
     } catch (err) {
-        message.error("Đã xảy ra lỗi")
+      message.error("Đã xảy ra lỗi");
     }
   };
+  const onFinishFailed = (errorInfo: any) => {
+      console.log("Failed:", errorInfo);
+    };
   return (
-    <Form
-      {...layout}
-      name="nest-messages"
-      onFinish={onFinish}
-      validateMessages={validateMessages}
-    >
-      <H2>Thêm sản phẩm mới</H2>
-      <FormAdd>
-        <div style={{ textAlign: "left" }}>
+    <>
+      <Breadcrumb>
+        <Typography.Title level={2} style={{ margin: 0 }}>
+          Thêm mới
+        </Typography.Title>
+      </Breadcrumb>
+      <Row gutter={16}>
+        <Col span={10}>
           <Form.Item
-            name="upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
+            name="img"
+            labelCol={{ span: 24 }}
+            label="Ảnh sản phẩm"
           >
-            <Upload name="logo" action="/upload.do" listType="picture">
-              <Button
-                style={{ width: "300px", height: "200px", marginLeft: "100px" }}
-                icon={<PlusOutlined style={{ fontSize: "34px" }} />}
-              ></Button>
-            </Upload>
+            <UploadImage />
           </Form.Item>
-          <Form.Item name={["desc"]} label="Mô tả" rules={[{ required: true }]}>
-            <Input style={{ width: "300px", height: "100px" }} />
-          </Form.Item>
-        </div>
-        <div>
-          <H4>Thông tin sản phẩm</H4>
-          <Form.Item
-            name={["name"]}
-            label="Tên sản phẩm"
-            rules={[{ required: true }]}
+          
+          {/* <UploadTest/> */}
+        </Col>
+        <Col span={14}>
+          <Typography.Title level={5}>Thông tin sản phẩm</Typography.Title>
+          <Form
+            // name="product"
+            initialValues={{}}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="on"
+            labelCol={{ span: 24 }}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name={["originalPrice"]}
-            label="Giá gốc"
-            rules={[{ type: "number" }]}
-          >
-            <InputNumber style={{ width: "622px" }} />
-          </Form.Item>
-          <Form.Item
-            name={["saleOffPrice"]}
-            label="Giá khuyến mãi"
-            rules={[{ type: "number" }]}
-          >
-            <InputNumber style={{ width: "622px" }} />
-          </Form.Item>
+            <Form.Item
+              name="name"
+              labelCol={{ span: 24 }}
+              label="Tên sản phẩm"
+              rules={[
+                { required: true, message: "Tên sản phẩm không được trống" },
+              ]}
+            >
+              <Input size="large" />
+            </Form.Item>
 
-          <Form.Item name={["category"]} label="Danh mục" hasFeedback>
-            <Select placeholder="Laptop" allowClear>
-              <Option value="1">Pc</Option>
-              <Option value="2">Phone</Option>
-              <Option value="3">Option 3</Option>
-            </Select>
-          </Form.Item>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="originalPrice"
+                  label="Giá gốc"
+                  labelCol={{ span: 24 }}
+                  rules={[
+                    { required: true, message: "Gía sản phẩm", type: "number" },
+                  ]}
+                >
+                  <InputNumber style={{ width: "100%" }} size="large" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="saleOffPrice"
+                  label="Giá giảm"
+                  labelCol={{ span: 24 }}
+                  rules={[
+                    { required: true, message: "Gía sản phẩm", type: "number" },
+                  ]}
+                >
+                  <InputNumber style={{ width: "100%" }} size="large" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Phân loại"
+                  name="categories"
+                  rules={[{ required: true }]}
+                >
+                  <Select style={{ width: "100%" }} size="large">
+                    <Option value="phone">Điện thoại</Option>
+                    <Option value="laptop">Laptop</Option>
+                    <Option value="accessories" disabled>
+                      Phụ kiện
+                    </Option>
+                    <Option value="tablet">Máy tính bảng</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
 
-          <Form.Item name={["features"]} label="Đặc điểm nổi bật">
-            <Input.TextArea style={{ height: "70px" }} />
-          </Form.Item>
-          <Form.Item name={["description"]} label="Mô tả dài">
-            <Input.TextArea style={{ height: "70px" }} />
-          </Form.Item>
-          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Thêm sản phẩm mới
-            </Button>
-          </Form.Item>
-        </div>
-      </FormAdd>
-    </Form>
+            <Form.Item
+              name="feature"
+              labelCol={{ span: 24 }}
+              label="Đặc điểm nổi bật"
+              rules={[{ required: true, message: "Đặc điểm sản phẩm" }]}
+            >
+              <TextArea name="feature" />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              labelCol={{ span: 24 }}
+              label="Mô tả sản phẩm"
+              rules={[{ required: true, message: "Mô tả sản phẩm" }]}
+            >
+              <TextArea name="description" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Tạo mới sản phẩm
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
+    </>
   );
 };
-const FormAdd = styled.form`
-  text-align: left;
-  display: grid;
-  grid-template-columns: 300px auto;
+const Breadcrumb = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 `;
-const H2 = styled.h2`
-  color: black;
-`;
-const H4 = styled.h4`
-  margin-left: 320px;
+
+const Label = styled.div`
+  font-size: 13px;
 `;
 export default PhoneAdd;

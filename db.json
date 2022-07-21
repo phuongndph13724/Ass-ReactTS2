@@ -2,12 +2,13 @@
   "users": [],
   "products": [
     {
+      "id": 1,
       "name": "Apple iPhone 13 Pro Max",
-      "originalPrice": 122222,
-      "saleOffPrice": 12312321312,
+      "originalPrice": 2222,
+      "saleOffPrice": 1111,
       "feature": "Apple iPhone 13 Pro Max",
       "description": "Apple iPhone 13 Pro Max",
-      "id": 1
+      "img": "http://res.cloudinary.com/dectee66b/image/upload/v1658399796/zb7gbvq2d8qzraxzhkhk.png"
     },
     {
       "name": "Apple iPhone 13 Pro Max",
@@ -40,6 +41,24 @@
       "feature": "Apple Watch Series 3 GPS Sport Band (Viền Nhôm, Dây Cao Su)",
       "description": "Apple Watch Series 3 GPS Sport Band (Viền Nhôm, Dây Cao Su)",
       "id": 5
+    },
+    {
+      "name": "Spsadksjdksad",
+      "originalPrice": 121212,
+      "saleOffPrice": 121211,
+      "categories": "phone",
+      "feature": "Dlsahdlaskdlksalhdlsad",
+      "description": "kldslkdjslakjdlksajdlksadsadsadsa",
+      "id": 6
+    },
+    {
+      "name": "ádasdsad",
+      "originalPrice": 121212,
+      "saleOffPrice": 2222,
+      "categories": "laptop",
+      "feature": "sadasdsadsadasdsa",
+      "description": "ádasdasdasdsadda",
+      "id": 7
     }
   ]
-} 
+}

@@ -38,7 +38,7 @@ function App() {
           <Route path="phone">
             <Route index element={<AdminPhone />} />
             <Route path="add" element={<PhoneAdd />} />
-            <Route path="edit" element={<PhoneEdit />} />
+            <Route path="edit/:id" element={<PhoneEdit />} />
           </Route>
           <Route path="tabcomputer" element={<AdminTableComputer />} />
         </Route>
