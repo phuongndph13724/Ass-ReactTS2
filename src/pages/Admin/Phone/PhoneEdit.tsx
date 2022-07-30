@@ -25,6 +25,17 @@ import { upload } from "../../../Ultils/Upload";
 
 const { TextArea } = Input;
 const { Option } = Select;
+const validateMessages = {
+  required: "${label} is required!",
+  minlength: "",
+  types: {
+    email: "${label} is not a valid email!",
+    number: "${label} is not a valid number!",
+  },
+  number: {
+    range: "${label} must be between ${min} and ${max}",
+  },
+};
 
 const PhongEdit: React.FC = () => {
   const [product, setProduct] = useState({});
@@ -80,7 +91,7 @@ const PhongEdit: React.FC = () => {
 
   const onPreview = async (file: UploadFile) => {
     let src = file.url as string;
-    
+
     if (!src) {
       src = await new Promise((resolve) => {
         const reader = new FileReader();
@@ -90,7 +101,7 @@ const PhongEdit: React.FC = () => {
     }
     const image = new Image();
     console.log(image);
-    
+
     image.src = src;
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
@@ -157,7 +168,13 @@ const PhongEdit: React.FC = () => {
                   name="originalPrice"
                   label="Giá gốc"
                   labelCol={{ span: 24 }}
-                  rules={[{ required: true, message: "Giá sản phẩm" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Nhập vào số giá sản phẩm",
+                      type: "number",
+                    },
+                  ]}
                 >
                   <InputNumber
                     style={{ width: "100%" }}
@@ -171,7 +188,13 @@ const PhongEdit: React.FC = () => {
                   name="saleOffPrice"
                   label="Giá giảm"
                   labelCol={{ span: 24 }}
-                  rules={[{ required: true, message: "Giá sản phẩm" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Nhập vào số giá sản phẩm",
+                      type: "number",
+                    },
+                  ]}
                 >
                   <InputNumber
                     style={{ width: "100%" }}

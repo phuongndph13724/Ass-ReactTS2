@@ -4,6 +4,7 @@ import {
   UserOutlined,
   PhoneOutlined,
   TabletOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu } from "antd";
@@ -34,6 +35,11 @@ const items3: MenuProps["items"] = [
     key: "Máy tính bảng",
     icon: <TabletOutlined />,
     label: <Link to="/admin/tabcomputer">Máy tính bảng</Link>,
+  },
+  {
+    key: "Danh mục",
+    icon: <UnorderedListOutlined />,
+    label: <Link to="/admin/category">Danh mục</Link>,
   },
 ];
 const items2: MenuProps["items"] = [

@@ -5,9 +5,11 @@ import styled from 'styled-components'
 
 
 const options = [
-    { value: 'Burns Bay Road' },
-    { value: 'Downing Street' },
-    { value: 'Wall Street' },
+  { value: "Iphone" },
+  { value: "Oppo" },
+  { value: "Samsung" },
+  { value: "Xiaomi" },
+  { value: "Phone" },
 ];
 
 const InputSearch = () => {

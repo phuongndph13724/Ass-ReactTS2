@@ -5,18 +5,14 @@ import { Link } from "react-router-dom";
 import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
 const { Paragraph } = Typography;
 import type { ColumnsType } from "antd/es/table";
-import { getAll, remove } from "../../../api/phone";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { list } from "../../../api/category";
 
 interface DataType {
   id: number;
   key: string;
   name: string;
-  saleOffPrice: number;
-  feature: string;
-  description: string;
-  originalPrice: string;
-  img: string;
+  title : string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -24,41 +20,15 @@ const columns: ColumnsType<DataType> = [
     title: "#",
   },
   {
-    title: "Tên sản phẩm",
+    title: "Tên danh mục",
     dataIndex: "name",
     key: "name",
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Ảnh sản phẩm",
-    dataIndex: "img",
-    key: "img",
-    render: (_, record) => (
-      <>
-        <Imgtable src={record.img} alt="" />
-      </>
-    ),
-  },
-  {
-    title: "Đặc điểm",
-    dataIndex: "feature",
-    key: "feature",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Giá khuyến mãi",
-    dataIndex: "saleOffPrice",
-    key: "saleOffPrice",
-  },
-  {
-    title: "Giá cũ",
-    dataIndex: "originalPrice",
-    key: "saloriginalPriceeOffPrice",
-  },
-  {
-    title: "Mô tả",
-    dataIndex: "description",
-    key: "description",
+    title: "Tiêu đề danh mục",
+    dataIndex: "title",
+    key: "title",
   },
   {
     title: "Ẩn/Hiện",
@@ -72,13 +42,12 @@ const columns: ColumnsType<DataType> = [
     key: "",
     render: (_, record) => (
       <>
-        <Link to={`/admin/phone/edit/${record.id}`}>
+        <Link to={`/admin/category/edit/${record.id}`}>
           <EditOutlined />
         </Link>
         <button style={{ color: "red" }} className="">
           <DeleteOutlined
             style={{ color: "red" }}
-            
           />
         </button>
       </>
@@ -86,41 +55,26 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const AdminPhone = () => {
+const AdminCategory = () => {
   const [dataTable, setDataTable] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAll();
+        const data = await list();
+        console.log(data);
         setDataTable(data.data);
       } catch (err) {}
     };
-
     fetchData();
   }, []);
-  const onRemoveItem = async (id: string) => {
-    console.log(id);
-
-    Modal.confirm({
-      title: "Bạn có muốn xóa không?",
-      onOk: async () => {
-        const { data } = await remove(id);
-        if (data) {
-          setDataTable(dataTable.filter((item) => item.id !== id));
-        }
-      },
-    });
-
-    console.log();
-  };
   return (
     <>
       <Breadcrumb>
         <Typography.Title level={2} style={{ margin: 0 }}>
-          Điện thoại
+          Danh mục sản phẩm
         </Typography.Title>
         <Link
-          to="/admin/phone/add"
+          to="/admin/category/add"
           style={{
             fontSize: "30px",
             color: "blue",
@@ -149,4 +103,4 @@ const Imgtable = styled.img`
   height: auto;
 `;
 
-export default AdminPhone;
+export default AdminCategory;

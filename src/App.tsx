@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import styled from "styled-components";
@@ -14,7 +14,14 @@ import PhoneAdd from "./pages/Admin/Phone/PhoneAdd";
 import PhoneEdit from "./pages/Admin/Phone/PhoneEdit";
 import SignIn from "./pages/Users/Signin";
 import SignUp from "./pages/Users/Signup";
+import AdminCategory from "./pages/Admin/Category/AdminCategory";
+import CategoryAdd from "./pages/Admin/Category/CategoryAdd";
 
+
+export const ThemeContext = React.createContext({
+  theme: "light",
+  setTheme: () => {},
+});
 function App() {
   const [count, setCount] = useState(0);
 
@@ -39,6 +46,10 @@ function App() {
             <Route index element={<AdminPhone />} />
             <Route path="add" element={<PhoneAdd />} />
             <Route path="edit/:id" element={<PhoneEdit />} />
+          </Route>
+          <Route path="category">
+            <Route index element={<AdminCategory />} />
+            <Route path="add" element={<CategoryAdd />} />
           </Route>
           <Route path="tabcomputer" element={<AdminTableComputer />} />
         </Route>
